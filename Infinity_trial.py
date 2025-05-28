@@ -10,7 +10,7 @@ def yes_no(question):
         elif response in ["no", "n"]:
             return "no"
         else:
-            print("Please enter yes / no")
+            print("Please enter yes / no") # This shows when they don't put in either answer.
 
 # displays game instructions
 
@@ -105,20 +105,20 @@ if num_rounds == "":
 else:
     print(f"You chose {num_rounds} rounds.")
 
+# Main game loop
 while True:
     if num_rounds != "" and rounds_played >= num_rounds:
-        break  # stops loop if rounds done
+        break
 
     question, answer = generate_random_question()
-    rounds_played += 1
-    print(f"\nQuestion {rounds_played}:")
+    print(f"\nQuestion {rounds_played + 1}:")
     print(question)
 
-    # force player to enter a whole number (no letters, no decimals)
+    # forces player to enter a whole number (no letters, no decimals)
     while True:
         user_input = input("Your answer: ").strip().lower()
         if user_input == "xxx":
-            break  # quits if player types xxx
+            break
         try:
             user_int = int(user_input)
             if user_int < 1:
@@ -131,32 +131,33 @@ while True:
     if user_input == "xxx":
         break
 
+    rounds_played += 1
+
     if user_input == answer:
         print("✅ Correct!")
         rounds_won += 1
-        feedback = "Correct!"
+        feedback = "Correct!"   # Displays wether they got it wrong or right
     else:
-        print(f"❌ Incorrect! The correct answer was {answer}.")  # correct answer shown
+        print(f"❌ Incorrect! The correct answer was {answer}.")
         rounds_lost += 1
         feedback = "Incorrect."
 
-    # save round result
     game_history.append(f"Round {rounds_played}: You answered '{user_input}' — {feedback}")
 
 # Game Summary
 if rounds_played > 0:
-    percent_won = rounds_won / rounds_played * 100
+    percent_won = rounds_won / rounds_played * 100  # Percent won and lost
     percent_lost = rounds_lost / rounds_played * 100
 
     print("\n📊 Game Statistics 📊")
-    print(f"Questions Answered: {rounds_played}")
+    print(f"Questions Answered: {rounds_played}")  # Calculates and shows user stats
     print(f"👍 Correct: {rounds_won} ({percent_won:.2f}%)")
-    print(f"❌ Incorrect: {rounds_lost} ({percent_lost:.2f}%)")  # show correct/incorrect stats
+    print(f"❌ Incorrect: {rounds_lost} ({percent_lost:.2f}%)")
 
     if yes_no("Do you want to see your game history? ") == "yes":
-        for item in game_history:
+        for item in game_history:  # Displays stats
             print(item)
 
     print("\nThanks for playing!")
 else:
-    print("🐔 You didn't answer any questions. Come back when you're ready!")
+    print("🐔 You didn't answer any questions. Come back when you're ready!") # User does not answer questions
